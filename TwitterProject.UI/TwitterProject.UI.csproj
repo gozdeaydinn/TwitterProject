@@ -43,6 +43,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -88,19 +94,64 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\AdminLTE.min.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\ionicons.min.css" />
+    <Content Include="Content\css\_all-skins.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\fonts\ionicons.svg" />
+    <Content Include="Content\image\userlogo.jpg" />
+    <Content Include="Content\script\adminlte.min.js" />
+    <Content Include="Content\script\bootstrap.min.js" />
+    <Content Include="Content\script\demo.js" />
+    <Content Include="Content\script\fastclick.js" />
+    <Content Include="Content\script\jquery.min.js" />
+    <Content Include="Content\script\jquery.slimscroll.min.js" />
+    <Content Include="Content\Uploads\UserImages\CruptedImages\userlogo.jpg" />
+    <Content Include="Content\Uploads\UserImages\OriginalImages\userlogo.jpg" />
+    <Content Include="Content\Uploads\UserImages\XSmallImages\userlogo.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Member\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Member\Controllers\ProfileController.cs" />
+    <Compile Include="Areas\Member\MemberAreaRegistration.cs" />
+    <Compile Include="Areas\Member\Models\DTO\AppUserDTO.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\VM\LoginVM.cs" />
+    <Compile Include="Models\VM\RegisterVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
+    <Content Include="Areas\Member\Views\web.config" />
+    <Content Include="Areas\Member\Views\Shared\MemberLayoutPage.cshtml" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\ionicons.eot" />
+    <Content Include="Content\fonts\ionicons.ttf" />
+    <Content Include="Content\fonts\ionicons.woff" />
+    <Content Include="Areas\Member\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Member\Views\Profile\ProfileShow.cshtml" />
+    <Content Include="Areas\Member\Views\Profile\Update.cshtml" />
     <None Include="packages.config" />
+    <Content Include="Views\Register\Add.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -110,8 +161,25 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
+    <Folder Include="Models\DTO\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TwitterProject.Core\TwitterProject.Core.csproj">
+      <Project>{9b4773c1-23d1-4b43-b99c-d8aa8ca5f52c}</Project>
+      <Name>TwitterProject.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TwitterProject.Model\TwitterProject.Model.csproj">
+      <Project>{56984597-a424-4dce-922e-d6a342576b1b}</Project>
+      <Name>TwitterProject.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TwitterProject.Service\TwitterProject.Service.csproj">
+      <Project>{8f377392-311e-4d41-a3b3-14dcaa92a832}</Project>
+      <Name>TwitterProject.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TwitterProject.Utility\TwitterProject.Utility.csproj">
+      <Project>{8c6ad34a-dc96-48e9-9354-5bee5e9a4699}</Project>
+      <Name>TwitterProject.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
