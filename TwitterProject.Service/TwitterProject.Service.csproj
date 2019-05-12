@@ -50,7 +50,7 @@
   <ItemGroup>
     <Compile Include="BaseService\ServiceBase.cs" />
     <Compile Include="Option\AppUserService.cs" />
-    <Compile Include="Option\CommetService.cs" />
+    <Compile Include="Option\CommentService.cs" />
     <Compile Include="Option\LikeService.cs" />
     <Compile Include="Option\TweetService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

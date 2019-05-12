@@ -8,7 +8,7 @@ using TwitterProject.Service.BaseService;
 
 namespace TwitterProject.Service.Option
 {
-    public class CommetService:ServiceBase<Comment>
+    public class CommentService : ServiceBase<Comment>
     {
     }
 }

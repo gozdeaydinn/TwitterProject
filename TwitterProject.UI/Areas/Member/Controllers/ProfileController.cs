@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using TwitterProject.Model.Option;
 using TwitterProject.Service.Option;
 using TwitterProject.UI.Areas.Member.Models.DTO;
+using TwitterProject.UI.Areas.Member.Models.VM;
 using TwitterProject.Utility;
 
 namespace TwitterProject.UI.Areas.Member.Controllers
@@ -13,14 +14,23 @@ namespace TwitterProject.UI.Areas.Member.Controllers
     public class ProfileController : Controller
     {
         AppUserService _appUserService;
+        TweetService _tweetService;
         public ProfileController()
         {
             _appUserService = new AppUserService();
+            _tweetService = new TweetService();
+            
         }
         public ActionResult ProfileShow()
         {
             Guid userid = _appUserService.FindByUserName(User.Identity.Name).ID;
-            List<AppUser> model = _appUserService.GetDefault(x=>x.ID==userid);
+            TweetDetailVM model = new TweetDetailVM()
+            {
+                Tweets = _tweetService.GetDefault(x => x.AppUserID == userid),
+                AppUsers = _appUserService.GetDefault(x => x.ID == userid)
+            };
+            
+            //List<AppUser> model = _appUserService.GetDefault(x=>x.ID==userid);
             return View(model);
         }
         public ActionResult Update(Guid id)

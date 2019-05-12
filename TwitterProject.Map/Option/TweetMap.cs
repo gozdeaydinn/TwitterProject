@@ -13,6 +13,8 @@ namespace TwitterProject.Map.Option
         public TweetMap()
         {
             ToTable("dbo.Tweets");
+            Property(x => x.Content).IsOptional();
+            Property(x => x.ImagePath).IsOptional();
 
             HasRequired(x => x.AppUser)
                 .WithMany(x => x.Tweets)

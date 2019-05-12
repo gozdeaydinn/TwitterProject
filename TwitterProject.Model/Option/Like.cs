@@ -9,7 +9,7 @@ namespace TwitterProject.Model.Option
 {
     public class Like:CoreEntity
     {
-        public int LikeNumber { get; set; }
+        //public int LikeNumber { get; set; }
         public Guid AppUserID { get; set; }
         public virtual AppUser AppUser { get; set; }
         public Guid TweetID { get; set; }

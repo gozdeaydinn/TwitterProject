@@ -14,6 +14,7 @@ namespace TwitterProject.Map.Option
         {
             ToTable("dbo.Comments");
             Property(x => x.Content).IsOptional();
+            
 
             HasRequired(x => x.AppUser)
                 .WithMany(x => x.Comments)

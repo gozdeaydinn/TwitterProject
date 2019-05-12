@@ -27,9 +27,11 @@ namespace TwitterProject.UI.Controllers
                 {
                         string cookie = user.UserName;
                         FormsAuthentication.SetAuthCookie(cookie, true);
-                        //Session["FullName"] = user.FirstName + ' ' + user.LastName;
-                        //Session["ImagePath"] = user.UserImage;
-                        return Redirect("/Member/Home/Index");
+                    Session["FullName"] = user.FirstName + ' ' + user.LastName;
+                    Session["ImagePath"] = user.UserImage;
+                    Session["ProfileImage"] = user.XSmallUserImage;
+                    Session["Bio"] = user.Bio;
+                    return Redirect("/Member/Home/Index");
                 }
                 else
                 {
@@ -56,9 +58,11 @@ namespace TwitterProject.UI.Controllers
                     {
                              string cookie = user.UserName;
                             FormsAuthentication.SetAuthCookie(cookie, true);
-                            //Session["FullName"] = user.FirstName + ' ' + user.LastName;
-                            //Session["ImagePath"] = user.UserImage;
-                            return Redirect("/Member/Home/Index");
+                        Session["FullName"] = user.FirstName + ' ' + user.LastName;
+                        Session["ImagePath"] = user.UserImage;
+                        Session["ProfileImage"] = user.XSmallUserImage;
+                        Session["Bio"] = user.Bio;
+                        return Redirect("/Member/Home/Index");
                     }
                     else
                     {
