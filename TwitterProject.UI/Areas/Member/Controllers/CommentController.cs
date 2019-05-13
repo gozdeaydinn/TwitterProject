@@ -24,7 +24,6 @@ namespace TwitterProject.UI.Areas.Member.Controllers
         }
         public JsonResult AddComment(string userComment, Guid id)
         {
-
             Comment comment = new Comment();
 
             comment.AppUserID = _appUserService.FindByUserName(HttpContext.User.Identity.Name).ID;

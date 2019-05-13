@@ -62,9 +62,9 @@ namespace TwitterProject.UI.Areas.Member.Controllers
         }
         public JsonResult TweetList(string id)
         {
-           
 
-            Tweet tweet =_tweetService.GetDefault(x =>x.Status == Core.Enum.Status.Active).LastOrDefault();
+            //Guid tweetID = new Guid(id);
+            Tweet tweet =_tweetService.GetDefault(x =>x.Status == Core.Enum.Status.Active).FirstOrDefault();
 
             return Json(new
             {
@@ -73,8 +73,10 @@ namespace TwitterProject.UI.Areas.Member.Controllers
                 LastName = tweet.AppUser.LastName,
                 CreatedDate = tweet.CreatedDate.ToString(),
                 Content = tweet.Content,
-                //CommentCount = _commentService.GetDefault(x => x.ArticleID == articleID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count(),
-                //LikeCount = _likeService.GetDefault(x => x.ArticleID == articleID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count(),
+                TweetCount = _tweetService.GetDefault(x => x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated).Count()
+
+                //CommentCount = _commentService.GetDefault(x => x.TweetID == tweetID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count(),
+                //LikeCount = _likeService.GetDefault(x => x.TweetID == tweetID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count(),
             }, JsonRequestBehavior.AllowGet);
         }
 

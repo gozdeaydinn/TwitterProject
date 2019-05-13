@@ -21,5 +21,7 @@ namespace TwitterProject.UI.Areas.Member.Models.DTO
         public string UserImage { get; set; }
         public string XSmallUserImage { get; set; }
         public string CruptedUserImage { get; set; }
+        public int Following { get; set; }
+        public int Followers { get; set; }
     }
 }
