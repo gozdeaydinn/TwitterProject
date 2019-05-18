@@ -179,6 +179,7 @@
     <Content Include="Areas\Member\Views\Home\Index.cshtml" />
     <Content Include="Areas\Member\Views\Profile\ProfileShow.cshtml" />
     <Content Include="Areas\Member\Views\Profile\Update.cshtml" />
+    <Content Include="Areas\Member\Views\Tweet\Show.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Register\Add.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -203,7 +204,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Member\Views\Comment\" />
     <Folder Include="Areas\Member\Views\Like\" />
-    <Folder Include="Areas\Member\Views\Tweet\" />
     <Folder Include="Models\DTO\" />
     <Folder Include="Scripts\ckeditor\plugins\a11yhelp\" />
     <Folder Include="Scripts\ckeditor\plugins\about\" />

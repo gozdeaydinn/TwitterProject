@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TwitterProject.Model.Option;
 using TwitterProject.Service.Option;
+using TwitterProject.UI.Areas.Member.Models.VM;
 using TwitterProject.Utility;
 
 namespace TwitterProject.UI.Areas.Member.Controllers
@@ -24,7 +26,7 @@ namespace TwitterProject.UI.Areas.Member.Controllers
         }
         // GET: Member/Tweet
         [HttpPost]
-        public JsonResult AddTweet(Tweet data, HttpPostedFileBase Image)
+        public ActionResult AddTweet(Tweet data, HttpPostedFileBase Image)
         {
             List<string> UploadedImagePaths = new List<string>();
 
@@ -44,41 +46,41 @@ namespace TwitterProject.UI.Areas.Member.Controllers
                 data.ImagePath = UploadedImagePaths[2];
             }
 
-            data.AppUserID = _appUserService.FindByUserName(HttpContext.User.Identity.Name).ID;
+            AppUser user = _appUserService.GetByDefault(x => x.UserName == User.Identity.Name);
+            data.AppUserID = user.ID;
             data.CreatedDate = DateTime.Now;
 
-            bool isAdded = false;
-            try
-            {
-                 _tweetService.Add(data);
-                isAdded = true;
-            }
-            catch (Exception ex)
-            {
-                isAdded = false;
-            }
-
-            return Json(isAdded, JsonRequestBehavior.AllowGet);
+            _tweetService.Add(data);
+            return Redirect("/Member/Home/Index");
         }
-        public JsonResult TweetList(string id)
+        public ActionResult DeleteTweet(Guid id)
         {
-
-            //Guid tweetID = new Guid(id);
-            Tweet tweet =_tweetService.GetDefault(x =>x.Status == Core.Enum.Status.Active).FirstOrDefault();
-
-            return Json(new
+            Tweet tweet = _tweetService.GetById(id);
+            Guid userid = _appUserService.FindByUserName(HttpContext.User.Identity.Name).ID;
+            if (tweet.AppUserID==userid)
             {
-                AppUserImagePath = tweet.AppUser.UserImage,
-                FirstName = tweet.AppUser.FirstName,
-                LastName = tweet.AppUser.LastName,
-                CreatedDate = tweet.CreatedDate.ToString(),
-                Content = tweet.Content,
-                TweetCount = _tweetService.GetDefault(x => x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated).Count()
-
-                //CommentCount = _commentService.GetDefault(x => x.TweetID == tweetID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count(),
-                //LikeCount = _likeService.GetDefault(x => x.TweetID == tweetID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count(),
-            }, JsonRequestBehavior.AllowGet);
+                _tweetService.Remove(id);
+                return Redirect("/Member/Home/Index");
+            }
+            else
+            {
+                return Redirect("/Member/Home/Index");
+            }
+           
         }
+        public ActionResult Show(Guid id)
+        {
+            TweetDetailVM model = new TweetDetailVM();
+            model.Tweet = _tweetService.GetById(id);
+            model.AppUser = _appUserService.GetById(model.Tweet.AppUser.ID);
+            model.Comments = _commentService.GetDefault(x => x.TweetID == id && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated));
+            model.LikeCount = _likeService.GetDefault(x => x.TweetID == id && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count;
+            model.CommentCount = _commentService.GetDefault(x => x.TweetID == id && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count;
+            model.Likes = _likeService.GetDefault(x => x.TweetID == id && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated));
+        
 
+            return View(model);
+
+        }
     }
 }

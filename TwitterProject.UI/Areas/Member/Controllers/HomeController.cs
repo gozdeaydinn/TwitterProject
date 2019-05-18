@@ -25,17 +25,22 @@ namespace TwitterProject.UI.Areas.Member.Controllers
         {
             TweetDetailVM model = new TweetDetailVM();
 
-            model.Tweets = _tweetService.GetActive();
-            
-            foreach (var item in model.Tweets)
-            {
-                model.AppUser = _appUserService.GetById(item.AppUser.ID);
-                model.Tweet = _tweetService.GetById(item.ID);
-                model.Comments = _commentService.GetDefault(x => x.TweetID == item.ID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).OrderByDescending(x => x.CreatedDate).Take(10).ToList();
-                model.Likes = _likeService.GetDefault(x => x.TweetID == item.ID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated));
-                model.LikeCount = _likeService.GetDefault(x => x.TweetID == item.ID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count();
-                model.CommentCount = _commentService.GetDefault(x => x.TweetID == item.ID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count();
-            }
+
+            model.Tweets = _tweetService.GetDefault(x=>x.Status==Core.Enum.Status.Active||x.Status==Core.Enum.Status.Updated).OrderByDescending(x => x.CreatedDate).Take(10).ToList();
+            model.AppUsers = _appUserService.GetActive();
+
+            //foreach (var item in model.Tweets)
+            //{
+              
+            //    model.AppUser = _appUserService.GetById(item.AppUser.ID);
+            //    model.Tweet = _tweetService.GetById(item.ID);
+            //    //model.Comments = _commentService.GetDefault(x => x.TweetID == item.ID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).OrderByDescending(x => x.CreatedDate).Take(10).ToList();
+            //    //model.Likes = _likeService.GetDefault(x => x.TweetID == item.ID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated));
+            //    //model.LikeCount = _likeService.GetDefault(x => x.TweetID == item.ID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count();
+            //    //model.CommentCount = _commentService.GetDefault(x => x.TweetID == item.ID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count();
+            //}
+
+
             return View(model);
         }
     }

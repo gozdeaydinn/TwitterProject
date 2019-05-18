@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TwitterProject.Model.Option;
 using TwitterProject.Service.Option;
+using TwitterProject.UI.Areas.Member.Models.VM;
 
 namespace TwitterProject.UI.Areas.Member.Controllers
 {
@@ -49,6 +50,7 @@ namespace TwitterProject.UI.Areas.Member.Controllers
 
             Comment comment = _commentService.GetDefault(x => x.TweetID == tweetID && x.Status == Core.Enum.Status.Active).LastOrDefault();
 
+           
             return Json(new
             {
                 AppUserImagePath = comment.AppUser.UserImage,
@@ -56,9 +58,25 @@ namespace TwitterProject.UI.Areas.Member.Controllers
                 LastName = comment.AppUser.LastName,
                 CreatedDate = comment.CreatedDate.ToString(),
                 Content = comment.Content,
-                CommentCount = _commentService.GetDefault(x => x.TweetID == tweetID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count(),
-                LikeCount = _likeService.GetDefault(x => x.TweetID == tweetID && (x.Status == Core.Enum.Status.Active || x.Status == Core.Enum.Status.Updated)).Count(),
+                CommentCount = _commentService.GetDefault(x => x.TweetID == tweetID && x.Status == Core.Enum.Status.Active).Count(),
+                LikeCount = _likeService.GetDefault(x => x.TweetID == tweetID && x.Status == Core.Enum.Status.Active).Count(),
             }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult DeleteComment(Guid id)
+        {
+            Guid userID = _appUserService.FindByUserName(HttpContext.User.Identity.Name).ID;
+            Comment comment = _commentService.GetById(id);
+            TweetDetailVM data = new TweetDetailVM();
+
+            if (comment.AppUserID == userID)
+            {
+                _commentService.Remove(id);
+                return Redirect("/Member/Tweet/Show/" + comment.TweetID);
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }

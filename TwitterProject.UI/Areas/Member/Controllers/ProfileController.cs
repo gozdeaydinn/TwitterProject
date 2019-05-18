@@ -26,7 +26,7 @@ namespace TwitterProject.UI.Areas.Member.Controllers
             Guid userid = _appUserService.FindByUserName(User.Identity.Name).ID;
             TweetDetailVM model = new TweetDetailVM()
             {
-                Tweets = _tweetService.GetDefault(x => x.AppUserID == userid),
+                Tweets = _tweetService.GetDefault(x => x.AppUserID == userid &&(x.Status==Core.Enum.Status.Active)),
                 AppUsers = _appUserService.GetDefault(x => x.ID == userid)
             };
             
